@@ -1,0 +1,11 @@
+ 'use client';
+import {useState} from 'react';
+import {Button} from '@/components/ui/button';
+import {Plus,Minus} from 'lucide-react';
+import {Product,money,imageUrl} from './shared';
+import {Choices,CartEntry,visibleGroups,resolveSelection} from './product-options';
+export default function StoreProductCard({product:p,cart,onAdd,onChange}:{product:Product,cart:Record<string,CartEntry>,onAdd:(p:Product,choices:Choices)=>void,onChange:(key:string,delta:number)=>void}){
+ const [choices,setChoices]=useState<Choices>({});const groups=visibleGroups(p);let selected:ReturnType<typeof resolveSelection>|null=null;try{selected=resolveSelection(p,choices)}catch{}
+ const quantity=selected?cart[selected.key]?.quantity||0:0;const minPrice=p.price+groups.reduce((n,g)=>n+Math.min(...g.values.map(v=>v.adjustment)),0);
+ return <article className="store-product"><div className="store-product-image">{p.bestSeller&&<span className="best-seller">MÁS VENDIDO</span>}<img src={imageUrl(p.image)} alt={p.name} loading="lazy"/></div><div className="product-info"><h3>{p.name}</h3>{p.description&&<p className="product-description">{p.description}</p>}{groups.length>0&&<div className="product-options">{groups.map(g=><label key={g.id}>{g.label}<select aria-label={`${g.label} de ${p.name}`} value={choices[g.id]||''} onChange={e=>setChoices({...choices,[g.id]:e.target.value})}><option value="">Elige {g.label.toLowerCase()}</option>{g.values.map(v=><option value={v.id} key={v.id}>{v.label}{v.adjustment?` (${v.adjustment>0?'+':''}${money(v.adjustment)})`:''}</option>)}</select></label>)}</div>}<div className="store-product-bottom"><strong>{!selected&&groups.length?'Desde ':''}{money(selected?.price??minPrice)}</strong>{quantity>0&&selected?<div className="quantity product-quantity"><Button variant="outline" size="icon" aria-label={`Reducir cantidad de ${p.name}`} onClick={()=>onChange(selected!.key,-1)}><Minus/></Button><span>{quantity}</span><Button variant="outline" size="icon" disabled={quantity>=99} aria-label={`Aumentar cantidad de ${p.name}`} onClick={()=>onAdd(p,choices)}><Plus/></Button></div>:<Button disabled={!selected} aria-label={`Agregar ${p.name} al carrito`} onClick={()=>onAdd(p,choices)}><Plus/>Agregar</Button>}</div>{!selected&&groups.length>0&&<p className="hint option-prompt">Selecciona tus opciones para agregar.</p>}</div></article>
+}

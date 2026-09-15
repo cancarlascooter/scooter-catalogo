@@ -50,6 +50,13 @@
       "when": 1789441705216,
       "tag": "0006_glossy_newton_destine",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "6",
+      "when": 1789442195566,
+      "tag": "0007_crazy_sasquatch",
+      "breakpoints": true
     }
   ]
 }
