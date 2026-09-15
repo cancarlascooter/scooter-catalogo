@@ -65,7 +65,12 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
-      "checkConstraints": {}
+      "checkConstraints": {
+        "inventory_quantity_nonnegative": {
+          "name": "inventory_quantity_nonnegative",
+          "value": "\"inventory\".\"quantity\" >= 0"
+        }
+      }
     },
     "inventory_events": {
       "name": "inventory_events",
