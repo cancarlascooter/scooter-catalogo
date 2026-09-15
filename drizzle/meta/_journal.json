@@ -15,6 +15,13 @@
       "when": 1789434603880,
       "tag": "0001_violet_marvel_zombies",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1789437779141,
+      "tag": "0002_freezing_energizer",
+      "breakpoints": true
     }
   ]
 }
