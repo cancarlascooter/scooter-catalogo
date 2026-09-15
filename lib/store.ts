@@ -1,5 +1,5 @@
-import { demoShop,demoProducts } from '@/app/demo';
-import type { Product,Shop } from '@/app/shared';
+import { demoShop,demoProducts,demoVideos } from '@/app/demo';
+import type { Product,Shop,CatalogVideo } from '@/app/shared';
 import { env } from 'cloudflare:workers';
 import { getChatGPTUser } from '@/app/chatgpt-auth';
 export function db(){if(!env.DB)throw new Error('Database unavailable');return env.DB;}
@@ -10,4 +10,4 @@ export function sameOrigin(req:Request){const origin=req.headers.get('origin');c
 export async function myShop(){const id=await owner();const shop=await db().prepare('SELECT id,name,phone FROM shops WHERE owner=?').bind(id).first();if(!shop)throw new HttpError(400,'Primero guarda los datos de tu negocio.');return shop;}
 export async function safe(run:()=>Promise<Response>){try{return await run()}catch(e){if(e instanceof HttpError)return Response.json({error:e.message},{status:e.status});console.error('Store request failed',e);return Response.json({error:'No pudimos completar la solicitud. Tus cambios siguen en el formulario; inténtalo de nuevo.'},{status:503})}}
 export function clean(value:unknown,max:number){if(typeof value!=='string')return '';return value.trim().slice(0,max)}
-export async function publicStore(id:string){if(id==='ejemplo')return {shop:demoShop,products:demoProducts};const shop=await db().prepare('SELECT id,name,phone FROM shops WHERE id=?').bind(id).first<Shop>();if(!shop)throw new HttpError(404,'No encontramos esta tienda.');const products=await db().prepare('SELECT id,name,description,price,image FROM products WHERE shop_id=? ORDER BY created_at DESC').bind(id).all<Product>();return {shop,products:products.results}}
+export async function publicStore(id:string){if(id==='ejemplo')return {shop:demoShop,products:demoProducts,videos:demoVideos};const shop=await db().prepare('SELECT id,name,phone FROM shops WHERE id=?').bind(id).first<Shop>();if(!shop)throw new HttpError(404,'No encontramos esta tienda.');const products=await db().prepare('SELECT id,name,description,price,image,department,category,available_mty AS availableMty,available_cdmx AS availableCdmx FROM products WHERE shop_id=? ORDER BY created_at DESC').bind(id).all<Product>();const videos=await db().prepare('SELECT id,title,source FROM videos WHERE shop_id=? ORDER BY created_at DESC').bind(id).all<CatalogVideo>();return {shop,products:products.results,videos:videos.results}}

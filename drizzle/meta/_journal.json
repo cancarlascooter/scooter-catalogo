@@ -22,6 +22,20 @@
       "when": 1789437779141,
       "tag": "0002_freezing_energizer",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1789438754859,
+      "tag": "0003_unique_blink",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1789439098518,
+      "tag": "0004_parallel_luminals",
+      "breakpoints": true
     }
   ]
 }

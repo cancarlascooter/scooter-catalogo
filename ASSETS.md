@@ -17,3 +17,15 @@ Illustrative product examples, not real inventory.
 - Photographer not retrieved (page rate limited) — https://unsplash.com/photos/a-pair-of-white-and-blue-sneakers-on-a-white-background-scbX2tuzfis
   Image: https://images.unsplash.com/photo-1687444334081-8ca04ed2a1a3?auto=format&fit=crop&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&ixlib=rb-4.0.3&q=80&w=1000
   License: https://unsplash.com/license
+
+# Additional clothing samples
+
+- Eduardo Pastor / Unsplash: https://unsplash.com/photos/blue-denim-jeans-on-black-surface-3oejsU5OQVk
+  Image: https://images.unsplash.com/photo-1605518216938-7c31b7b14ad0?fm=jpg&w=1200&q=85&fit=max
+
+- Nimble Made / Unsplash: https://unsplash.com/photos/white-button-up-shirt-on-clothes-hanger-hMMXhKSZk7k
+  Image: https://images.unsplash.com/photo-1603252109303-2751441dd157?fm=jpg&w=1200&q=85&fit=max
+
+License: https://unsplash.com/license
+
+The sample MP4 is a silent 12-second slideshow of the credited sample photographs, assembled with FFmpeg. It is illustrative, not footage of actual inventory.
