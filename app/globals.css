@@ -179,3 +179,5 @@
 .store-intro{text-align:left}.store-intro h1,.fulfillment-picker h2{font-family:"Nunito Sans",sans-serif;font-weight:900;color:#000}.store-intro>p{text-align:left}
 
 .store-intro h1{margin-bottom:0;line-height:1.15}.store-intro>p:not(.eyebrow){margin-top:2px}
+
+.topbar .video-nav{display:inline-flex;align-items:center;gap:7px;font-family:"Nunito Sans",sans-serif;font-size:16px;font-weight:800;color:#c2410c;letter-spacing:-.02em;text-decoration:none}.topbar .video-nav:hover{color:#9a3412}.topbar .video-nav:focus-visible{outline:2px solid #ea580c;outline-offset:5px;border-radius:4px}.topbar .video-nav svg{display:block;width:18px;height:18px}
