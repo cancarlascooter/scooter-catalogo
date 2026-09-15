@@ -183,3 +183,5 @@
 .topbar .video-nav{display:inline-flex;align-items:center;gap:7px;font-family:"Nunito Sans",sans-serif;font-size:16px;font-weight:800;color:#c2410c;letter-spacing:-.02em;text-decoration:none}.topbar .video-nav:hover{color:#9a3412}.topbar .video-nav:focus-visible{outline:2px solid #ea580c;outline-offset:5px;border-radius:4px}.topbar .video-nav svg{display:block;width:18px;height:18px}
 
 .topbar .video-nav{width:48px;height:48px;justify-content:center}.topbar .video-nav svg{width:30px;height:30px}
+
+.install-app{display:flex;gap:14px;margin-top:30px;padding:20px;border:1px solid var(--border);border-radius:14px;background:#fff}.install-app>svg{flex-shrink:0;color:#c2410c;width:28px;height:28px}.install-app h3{font-size:18px;font-weight:800;margin:0 0 6px}.install-app p{font-size:14px;line-height:1.6;margin:0 0 14px}.install-steps{margin-top:16px}.install-steps p:last-child{margin-bottom:0}@media(display-mode:standalone){.install-app{display:none}.topbar{padding-top:max(16px,env(safe-area-inset-top))}.mobile-cart-bar{bottom:calc(18px + env(safe-area-inset-bottom))}.store-footer{padding-bottom:calc(105px + env(safe-area-inset-bottom))}}
