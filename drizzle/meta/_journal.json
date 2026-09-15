@@ -36,6 +36,13 @@
       "when": 1789439098518,
       "tag": "0004_parallel_luminals",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1789441305316,
+      "tag": "0005_wild_grandmaster",
+      "breakpoints": true
     }
   ]
 }

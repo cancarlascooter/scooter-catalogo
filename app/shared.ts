@@ -10,3 +10,7 @@ export type CatalogVideo={id:string,title:string,source:string};
 export type Fulfillment='mty'|'cdmx'|'shipping';
 export const fulfillmentLabel=(f:Fulfillment)=>({mty:'Monterrey',cdmx:'Ciudad de México',shipping:'Paquetería desde Monterrey'})[f];
 export const isAvailable=(p:Product,f:Fulfillment)=>f==='cdmx'?p.availableCdmx!==0:p.availableMty!==0;
+
+export const shippingFeeFor=(f:Fulfillment)=>f==='shipping'?30000:0;
+
+export const promotionDiscount=(subtotal:number,percent:number)=>Math.round(subtotal*percent/100);

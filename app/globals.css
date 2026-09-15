@@ -145,3 +145,9 @@
 }
 
 :root{--font-sans:"Nunito Sans",sans-serif}body,input,button,textarea,select{font-family:"Nunito Sans",sans-serif}
+
+.products-start{scroll-margin-top:28px}.products-start:focus{outline:none}.products-start:focus-visible{outline:2px solid #087568;outline-offset:6px;border-radius:4px}
+
+.promotion-manager{margin-top:30px}.promotion-manager form{margin:22px 0}.promotion-manager form>button{margin-top:16px}.promotion-list>div{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:16px 0;border-bottom:1px solid var(--border);flex-wrap:wrap}.coupon-entry{padding-bottom:18px;margin-bottom:18px;border-bottom:1px solid var(--border)}.coupon-entry label{margin:0 0 12px}.coupon-entry input{margin-top:8px}.coupon-entry p{overflow-wrap:anywhere}
+
+.catalog-branch-note{font-size:14px;line-height:1.5;color:#65737b;margin:-8px 0 22px}
