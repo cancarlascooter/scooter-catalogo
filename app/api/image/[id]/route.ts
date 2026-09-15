@@ -1,0 +1,2 @@
+import { bucket,safe,HttpError } from '@/lib/store';
+export async function GET(_:Request,{params}:{params:Promise<{id:string}>}){return safe(async()=>{const {id}=await params;if(!/^[a-f0-9-]{36}$/.test(id))throw new HttpError(404,'Imagen no encontrada.');const object=await bucket().get(id);if(!object)throw new HttpError(404,'Imagen no encontrada.');return new Response(object.body,{headers:{'Content-Type':object.httpMetadata?.contentType||'application/octet-stream','Cache-Control':'public, max-age=86400','X-Content-Type-Options':'nosniff'}})})}
