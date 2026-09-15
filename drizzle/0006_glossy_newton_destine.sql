@@ -1,0 +1,1 @@
+ALTER TABLE `shops` ADD `promotion_message` text DEFAULT '' NOT NULL;

@@ -1,5 +1,5 @@
 import type { Product,Shop,CatalogVideo } from './shared';
-export const demoShop:Shop={id:'ejemplo',name:'Casa Nómada',phone:'528125818920'};
+export const demoShop:Shop={id:'ejemplo',name:'Casa Nómada',phone:'528125818920',promotionMessage:'Prueba PROMO10: 10% en productos.'};
 export const demoProducts:Product[]=[
 {id:'demo-headphones',availableMty:1,availableCdmx:0,name:'Audífonos inalámbricos',description:'Tu música, a donde vayas. Diseño cómodo para acompañarte todos los días.',price:89900,image:'/samples/headphones.jpg',department:'Electrónica',category:'Audio'},
 {id:'demo-backpack',availableMty:0,availableCdmx:1,name:'Mochila de diario',description:'Un básico para tus planes. Espacio para llevar lo esencial a la oficina o de paseo.',price:64900,image:'/samples/backpack.jpg',department:'Accesorios',category:'Mochilas'},
