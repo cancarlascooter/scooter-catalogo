@@ -177,3 +177,5 @@
 [data-slot=button]{--primary:#c2410c;--primary-foreground:#fff;--secondary:#ffedd5;--secondary-foreground:#9a3412;--accent:#ffedd5;--accent-foreground:#9a3412;--ring:#ea580c}
 
 .store-intro{text-align:left}.store-intro h1,.fulfillment-picker h2{font-family:"Nunito Sans",sans-serif;font-weight:900;color:#000}.store-intro>p{text-align:left}
+
+.store-intro h1{margin-bottom:0;line-height:1.15}.store-intro>p:not(.eyebrow){margin-top:2px}
