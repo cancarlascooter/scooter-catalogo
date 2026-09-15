@@ -31,3 +31,6 @@ License: https://unsplash.com/license
 The sample MP4 is a silent 12-second slideshow of the credited sample photographs, assembled with FFmpeg. It is illustrative, not footage of actual inventory.
 
 - Nunito Sans (400, 600, 700, 800): Google Fonts, SIL Open Font License. Files in public/fonts; license included as NunitoSans-OFL.txt. https://fonts.google.com/specimen/Nunito+Sans
+
+- App install icons are rendered from the existing catalog favicon.
+- HEIC conversion uses heic-to 1.5.2 (LGPL-3.0), https://github.com/hoppergee/heic-to. The library is loaded separately on demand.
