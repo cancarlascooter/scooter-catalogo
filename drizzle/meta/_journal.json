@@ -71,6 +71,13 @@
       "when": 1789443914451,
       "tag": "0009_shocking_white_tiger",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "6",
+      "when": 1789444460791,
+      "tag": "0010_reflective_hulk",
+      "breakpoints": true
     }
   ]
 }
