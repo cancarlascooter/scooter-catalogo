@@ -1,8 +1,8 @@
 # Catálogo de pedidos — aplicación unificada
 
-**Alojamiento actual:** https://catalogo-pedidos.cancarla19.workers.dev/
+**Alojamiento actual:** https://catalogo-pedidos.scootermexico.workers.dev/
 
-**Administrador:** https://catalogo-pedidos.cancarla19.workers.dev/administrador
+**Administrador:** https://catalogo-pedidos.scootermexico.workers.dev/administrador
 
 Lee [la guía de uso y publicación](deployment/GUIA.md). El catálogo y el administrador comparten productos, inventario, pedidos e imágenes. El uso diario se realiza desde el panel con correo y contraseña, sin ChatGPT ni IA.
 

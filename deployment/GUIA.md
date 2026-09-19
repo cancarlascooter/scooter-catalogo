@@ -2,9 +2,9 @@
 
 ## Enlaces
 
-- Catálogo público: https://catalogo-pedidos.cancarla19.workers.dev/
-- Administración: https://catalogo-pedidos.cancarla19.workers.dev/administrador
-- Acceso: https://catalogo-pedidos.cancarla19.workers.dev/acceso
+- Catálogo público: https://catalogo-pedidos.scootermexico.workers.dev/
+- Administración: https://catalogo-pedidos.scootermexico.workers.dev/administrador
+- Acceso: https://catalogo-pedidos.scootermexico.workers.dev/acceso
 
 ## Uso diario (sin IA)
 
