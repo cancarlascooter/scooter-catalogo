@@ -1,3 +1,19 @@
+# Catálogo de pedidos — aplicación unificada
+
+**Alojamiento actual:** https://catalogo-pedidos.cancarla19.workers.dev/
+
+**Administrador:** https://catalogo-pedidos.cancarla19.workers.dev/administrador
+
+Lee [la guía de uso y publicación](deployment/GUIA.md). El catálogo y el administrador comparten productos, inventario, pedidos e imágenes. El uso diario se realiza desde el panel con correo y contraseña, sin ChatGPT ni IA.
+
+Publicación en la cuenta propia de Cloudflare: `npm run db:migrate:cloudflare` y `npm run deploy:cloudflare`. El propietario crea su cuenta mediante el enlace de activación privado. Los secretos se guardan únicamente en Cloudflare y en archivos locales ignorados.
+
+---
+
+## Documentación original del entorno Sites
+
+La información siguiente corresponde al alojamiento anterior. Para la publicación independiente utiliza la guía anterior y los comandos con sufijo `:cloudflare`.
+
 # vinext-starter
 
 A clean full-stack starter running on [vinext](https://github.com/cloudflare/vinext), with optional Cloudflare D1 and Drizzle support.

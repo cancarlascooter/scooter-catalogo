@@ -1,0 +1,11 @@
+{
+  "name": "catalogo-pedidos",
+  "account_id": "8cc19b5e40e03bd85efdd5cee6cd9dc7",
+  "main": "vinext/server/fetch-handler",
+  "compatibility_date": "2026-05-15",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": true,
+  "d1_databases": [{"binding":"DB","database_name":"catalogo-pedidos-db","database_id":"9bc68e86-39c4-4998-bf6f-f63d0a3cc379","migrations_dir":"drizzle"}],
+  "r2_buckets": [{"binding":"BUCKET","bucket_name":"catalogo-pedidos-media"}],
+  "vars": {"AUTH_MODE":"password","VAPID_SUBJECT":"mailto:cancarla19@gmail.com"}
+}

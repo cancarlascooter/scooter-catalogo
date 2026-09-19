@@ -1,3 +1,4 @@
+import {passwordMode,currentAdmin} from '@/lib/admin-auth';
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -19,6 +20,7 @@ const SIGN_OUT_PATH = "/signout-with-chatgpt";
 const CALLBACK_PATH = "/callback";
 
 export async function getChatGPTUser(): Promise<ChatGPTUser | null> {
+  if(passwordMode()){const user=await currentAdmin();return user?{userId:user.owner_id,email:user.email,displayName:user.email,fullName:null}:null;}
   const requestHeaders = await headers();
   const userId = requestHeaders.get(USER_ID_HEADER);
   const email = requestHeaders.get(USER_EMAIL_HEADER);
