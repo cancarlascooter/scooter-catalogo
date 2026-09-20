@@ -1,9 +1,10 @@
+import {selectableAdminPermissions,effectivePermissions,parseAdminPermissions} from '@/app/admin-permissions';
 import {cookies} from 'next/headers';
 import {authDb,passwordMode,settings,currentAdmin,digest,token,hashPassword,verifyPassword,newSession,clearSession,rateLimit,SESSION_COOKIE} from '@/lib/admin-auth';
 import {HttpError,safe} from '@/lib/store';
 export const dynamic='force-dynamic';
 const json=(data:unknown,status=200,cookie?:string)=>Response.json(data,{status,headers:{'Cache-Control':'no-store',...(cookie?{'Set-Cookie':cookie}:{})}});
-export async function GET(){return safe(async()=>{if(!passwordMode())throw new HttpError(404,'No disponible.');const user=await currentAdmin();if(!user)return json({user:null});const users=user.is_owner?(await authDb().prepare('SELECT id,email,is_owner FROM admin_users WHERE owner_id=? ORDER BY created_at').bind(user.owner_id).all()).results:[];return json({user,users})})}
+export async function GET(){return safe(async()=>{if(!passwordMode())throw new HttpError(404,'No disponible.');const user=await currentAdmin();if(!user)return json({user:null});const users=user.is_owner?(await authDb().prepare('SELECT id,email,is_owner,permissions FROM admin_users WHERE owner_id=? ORDER BY created_at').bind(user.owner_id).all()).results:[];return json({user:{...user,permissions:effectivePermissions(user)},users:users.map(u=>({...u,permissions:effectivePermissions(u as {is_owner:number,permissions:string})}))})})}
 export async function POST(req:Request,{params}:{params:Promise<{action:string}>}){return safe(async()=>{
  if(!passwordMode())throw new HttpError(404,'No disponible.');
  const origin=req.headers.get('origin');if(!origin||origin!==new URL(req.url).origin)throw new HttpError(403,'Solicitud no permitida.');
@@ -42,7 +43,7 @@ export async function POST(req:Request,{params}:{params:Promise<{action:string}>
      if(await authDb().prepare('SELECT id FROM admin_users WHERE email=?').bind(email).first())throw new HttpError(409,'Este correo ya tiene acceso.');
      const hash=await hashPassword(password);
      const result=await authDb().batch([
-       authDb().prepare('INSERT INTO admin_users(id,email,password_hash,owner_id,is_owner,created_at) SELECT ?,email,?,owner_id,0,? FROM admin_invites WHERE token_hash=? AND email=? AND expires_at>?').bind(id,hash,Date.now(),digest(secret),email,Date.now()),
+       authDb().prepare('INSERT INTO admin_users(id,email,password_hash,owner_id,is_owner,created_at,permissions) SELECT ?,email,?,owner_id,0,?,permissions FROM admin_invites WHERE token_hash=? AND email=? AND expires_at>?').bind(id,hash,Date.now(),digest(secret),email,Date.now()),
        authDb().prepare('DELETE FROM admin_invites WHERE token_hash=?').bind(digest(secret))
      ]);if(result[0].meta.changes!==1)throw new HttpError(409,'La invitación ya fue utilizada.');
    }
@@ -59,10 +60,12 @@ export async function POST(req:Request,{params}:{params:Promise<{action:string}>
    return json({ok:true},200,await newSession(user.id));
  }
  if(!user.is_owner)throw new HttpError(403,'Solo el propietario puede administrar accesos.');
+ if(action==='invite'||action==='permissions'){if(!Array.isArray(data.permissions)||data.permissions.some(p=>!selectableAdminPermissions.includes(p as never)))throw new HttpError(400,'Selecciona secciones válidas.');}
+ if(action==='permissions'){if(typeof data.id!=='string')throw new HttpError(400,'Selecciona un perfil.');const result=await authDb().prepare('UPDATE admin_users SET permissions=? WHERE id=? AND owner_id=? AND is_owner=0').bind(JSON.stringify(parseAdminPermissions(data.permissions)),data.id,user.owner_id).run();if(result.meta.changes!==1)throw new HttpError(404,'Perfil no encontrado o pertenece al propietario.');return json({ok:true});}
  if(action==='invite'){
    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)||email.length>254)throw new HttpError(400,'Escribe un correo válido.');
    if(await authDb().prepare('SELECT id FROM admin_users WHERE email=?').bind(email).first())throw new HttpError(409,'Este correo ya tiene acceso.');
-   const value=token();await authDb().batch([authDb().prepare('DELETE FROM admin_invites WHERE email=? AND owner_id=?').bind(email,user.owner_id),authDb().prepare('INSERT INTO admin_invites VALUES(?,?,?,?)').bind(digest(value),email,user.owner_id,Date.now()+86400000)]);
+   const value=token();await authDb().batch([authDb().prepare('DELETE FROM admin_invites WHERE email=? AND owner_id=?').bind(email,user.owner_id),authDb().prepare('INSERT INTO admin_invites(token_hash,email,owner_id,expires_at,permissions) VALUES(?,?,?,?,?)').bind(digest(value),email,user.owner_id,Date.now()+86400000,JSON.stringify(parseAdminPermissions(data.permissions)))]);
    return json({url:new URL('/acceso',req.url).href+'#invite='+value,email});
  }
  if(action==='revoke'){
