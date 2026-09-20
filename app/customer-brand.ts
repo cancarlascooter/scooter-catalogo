@@ -1,0 +1,2 @@
+export const SCOOTER_SHOP='27e0302c-1d4a-4b4f-898e-47c5b2d83748';
+export function customerBrand(id:string,name='Mi catálogo'){const scooter=id===SCOOTER_SHOP;return {name:scooter?'Scooter':name,icon192:scooter?'/branding/scooter-icon-v1-192.png':'/app-icon-192.png',icon512:scooter?'/branding/scooter-icon-v1-512.png':'/app-icon-512.png',appleIcon:scooter?'/branding/scooter-icon-v1-180.png':'/app-icon-192.png'}}
