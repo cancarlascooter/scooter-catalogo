@@ -21,3 +21,6 @@ export const adminInstallation=sqliteTable('admin_installation',{slot:integer('s
 export const adminSessions=sqliteTable('admin_sessions',{tokenHash:text('token_hash').primaryKey(),userId:text('user_id').notNull().references(()=>adminUsers.id,{onDelete:'cascade'}),expiresAt:integer('expires_at').notNull()},t=>[index('admin_sessions_user').on(t.userId)]);
 export const adminAttempts=sqliteTable('admin_attempts',{key:text('key').primaryKey(),count:integer('count').notNull(),expiresAt:integer('expires_at').notNull()});
 export const adminInvites=sqliteTable('admin_invites',{tokenHash:text('token_hash').primaryKey(),email:text('email').notNull(),ownerId:text('owner_id').notNull(),expiresAt:integer('expires_at').notNull()});
+
+export const shopSettings=sqliteTable('shop_settings',{shopId:text('shop_id').primaryKey().references(()=>shops.id),departmentIcons:text('department_icons').notNull().default('{}'),lowStockThreshold:integer('low_stock_threshold').notNull().default(5)});
+export const storePresence=sqliteTable('store_presence',{id:text('id').primaryKey(),shopId:text('shop_id').notNull().references(()=>shops.id),visitor:text('visitor').notNull(),lastSeen:integer('last_seen').notNull()},t=>[index('store_presence_shop_seen').on(t.shopId,t.lastSeen)]);

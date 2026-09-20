@@ -1,0 +1,18 @@
+import assert from 'node:assert/strict';import fs from 'node:fs';
+const base='http://localhost:8792';let cookie='';async function request(path,{data,form,method,auth=true}={}){return fetch(base+path,{method:method||(data||form?'POST':'GET'),headers:{origin:base,...(auth?{cookie}:{}),...(data?{'content-type':'application/json'}:{})},body:form|| (data?JSON.stringify(data):undefined)})}
+for(const path of ['/api/admin/dashboard','/api/admin/settings'])assert.equal((await request(path,{auth:false})).status,401);
+let r=await request('/api/admin-auth/login',{data:{email:'local-test@example.com',password:'Local-only-test-password-92!'}});assert.equal(r.status,200);cookie=r.headers.get('set-cookie').split(';')[0];
+const {shop}=await (await request('/api/shop')).json();const settings=await (await request('/api/admin/settings')).json();const before=await (await request('/api/admin/dashboard')).json();
+r=await request('/api/admin/settings',{method:'PATCH',data:{departmentIcons:{Pruebas:'flower'},lowStockThreshold:5}});assert.equal(r.status,200);
+assert.equal((await (await request('/api/store/'+shop.id,{auth:false})).json()).shop.departmentIcons.Pruebas,'flower');
+assert.equal((await request('/api/admin/settings',{method:'PATCH',data:{departmentIcons:{Pruebas:'bad'},lowStockThreshold:5}})).status,400);
+const visitor=crypto.randomUUID();await request('/api/presence',{data:{shopId:shop.id,visitor}});let stats=await (await request('/api/admin/dashboard')).json();assert.equal(stats.visitors,before.visitors,'Owner excluded');
+await request('/api/presence',{auth:false,data:{shopId:shop.id,visitor}});await request('/api/presence',{auth:false,data:{shopId:shop.id,visitor}});stats=await (await request('/api/admin/dashboard')).json();assert.equal(stats.visitors,before.visitors+1,'Repeated heartbeat counted once');
+const form=new FormData();for(const [k,v] of Object.entries({name:'Receipt photo test',price:'100',description:'Local fixture',department:'Pruebas',availableCdmx:'0'}))form.set(k,v);form.set('image',new Blob([fs.readFileSync('public/samples/camisa.jpg')],{type:'image/jpeg'}),'photo.jpg');r=await request('/api/products',{form});assert.equal(r.status,200);const {product}=await r.json();
+r=await request('/api/inventory',{data:{productId:product.id,choices:{},branch:'mty',mode:'set',quantity:4,expected:0,requestKey:crypto.randomUUID()}});assert.equal(r.status,200);
+stats=await (await request('/api/admin/dashboard')).json();assert.equal(stats.products,before.products+1);assert.ok(stats.low.some(p=>p.id===product.id&&p.branches[0].quantity===4));
+r=await request('/api/orders',{auth:false,data:{shopId:shop.id,customer:'Prueba recibo',phone:'528111111111',address:'Calle prueba 123',fulfillment:'mty',requestKey:crypto.randomUUID(),items:[{id:product.id,quantity:1,choices:{}}]}});assert.equal(r.status,201,await r.clone().text());const {token}=await r.json();let html=await (await request('/pedido/'+token,{auth:false})).text();const imagePath=html.match(/\/api\/order-image\/[a-f0-9-]{36}/)?.[0];assert.ok(imagePath);
+const removed=await request('/api/products',{method:'DELETE',data:{id:product.id}});assert.equal(removed.status,200);assert.equal((await request(imagePath,{auth:false})).status,200,'Receipt image survives product deletion');assert.equal((await request('/api/image/'+product.image,{auth:false})).status,404);
+stats=await (await request('/api/admin/dashboard')).json();assert.equal(stats.orders,before.orders+1);
+await request('/api/admin/settings',{method:'PATCH',data:settings});
+console.log('PASS private dashboard/settings, department symbols, visitor deduplication and owner exclusion, stock alerts, daily totals, receipt photo retained after deletion.');

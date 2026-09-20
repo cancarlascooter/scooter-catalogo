@@ -1,0 +1,4 @@
+import {Package,Shirt,Laptop,House,Flower2,Leaf,Gift,Heart,Star,ShoppingBag,Headphones,Watch,Footprints,Sparkles} from 'lucide-react';
+export const departmentSymbols=[['package','Caja',Package],['shirt','Ropa',Shirt],['laptop','Electrónica',Laptop],['house','Hogar',House],['flower','Flor',Flower2],['leaf','Hoja',Leaf],['gift','Regalo',Gift],['heart','Corazón',Heart],['star','Estrella',Star],['bag','Bolsa',ShoppingBag],['headphones','Audífonos',Headphones],['watch','Reloj',Watch],['shoes','Calzado',Footprints],['sparkles','Destellos',Sparkles]] as const;
+export function defaultDepartmentSymbol(name:string){return /ropa/i.test(name)?'shirt':/electr[oó]nica/i.test(name)?'laptop':/hogar/i.test(name)?'house':'package'}
+export default function DepartmentIcon({name,symbol}:{name:string,symbol?:string}){const Icon=departmentSymbols.find(([id])=>id===(symbol||defaultDepartmentSymbol(name)))?.[2]||Package;return <Icon aria-hidden="true"/>}
