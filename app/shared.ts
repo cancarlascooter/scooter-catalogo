@@ -1,4 +1,4 @@
-export type OptionGroup={id:string,label:string,visible:boolean,values:{id:string,label:string,adjustment:number,shippingAdjustment?:number}[]};
+export type OptionGroup={pricing?:'final',id:string,label:string,visible:boolean,values:{id:string,label:string,adjustment:number,shippingAdjustment?:number}[]};
 export type Product={inventoryTracked?:number,stock?:Record<string,{mty:number,cdmx:number}>,bestSeller?:boolean,options?:OptionGroup[],id:string,name:string,description:string,price:number,shippingPrice?:number|null,image:string,department:string,category:string,availableMty:number,availableCdmx:number};
 export type Shop={id:string,name:string,phone:string,promotionMessage?:string};
 export const money=(cents:number)=>new Intl.NumberFormat('es-MX',{style:'currency',currency:'MXN'}).format(cents/100);

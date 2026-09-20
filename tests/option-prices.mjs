@@ -1,0 +1,17 @@
+import assert from 'node:assert/strict';
+import {resolveSelection,productPriceRange,validateOptions} from '../app/product-options.ts';
+import {prepareImport} from '../app/product-import-data.ts';
+const group={id:'bag',label:'Bolsa',visible:true,pricing:'final',values:[{id:'28',label:'28',adjustment:519900},{id:'14',label:'14',adjustment:249900},{id:'7',label:'7',adjustment:119900},{id:'1',label:'1',adjustment:29900}]};
+const p={id:'test',name:'Super Buff Premium',price:29900,shippingPrice:null,options:[group]};
+for(const v of group.values)for(const branch of ['mty','cdmx','shipping'])assert.equal(resolveSelection(p,{bag:v.id},branch).price,v.adjustment);
+assert.equal(productPriceRange(p).min,29900);
+assert.deepEqual(validateOptions([group],29900),[group]);
+const optional={id:'color',label:'Color',visible:true,pricing:'final',values:[{id:'red',label:'Rojo',adjustment:0}]};
+assert.equal(resolveSelection({...p,options:[group,optional]},{bag:'1',color:'red'}).price,29900);
+assert.throws(()=>validateOptions([group,{...optional,values:[{id:'red',label:'Rojo',adjustment:20000}]}],29900),/solo grupo/);
+assert.equal(resolveSelection({...p,options:[]},{}).price,29900);
+assert.equal(resolveSelection({...p,options:[{...group,visible:false}]},{}).price,29900);
+assert.equal(resolveSelection({...p,options:[{...group,values:[{id:'1',label:'1',adjustment:29900,shippingAdjustment:35000}]}]},{bag:'1'},'shipping').price,35000);
+const legacy={...group,pricing:undefined,values:[{id:'1',label:'1',adjustment:5000}]};assert.equal(resolveSelection({...p,options:[legacy]},{bag:'1'}).price,34900);
+const imported=prepareImport([{row:2,name:'Camisa',size:'M',color:'Azul',localPrice:44900,shippingPrice:49900,department:'Ropa',category:'Camisas',description:''},{row:3,name:'Camisa',size:'G',color:'Azul',localPrice:47900,shippingPrice:52900,department:'Ropa',category:'Camisas',description:''}]);assert.equal(imported.errors.length,0);const item={...p,...imported.products[0]};assert.equal(resolveSelection(item,{'import-options':'option-1'}).price,47900);assert.equal(resolveSelection(item,{'import-options':'option-1'},'shipping').price,52900);
+console.log('PASS: precios finales, paquetería, opciones sin precio, grupos ocultos, validación, datos anteriores e importación Excel.');
