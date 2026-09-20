@@ -6,7 +6,7 @@ export const orders=sqliteTable('orders',{id:text('id').primaryKey(),token:text(
 
 export const videos=sqliteTable('videos',{id:text('id').primaryKey(),shopId:text('shop_id').notNull().references(()=>shops.id),title:text('title').notNull(),source:text('source').notNull(),createdAt:integer('created_at').notNull()},t=>[index('videos_shop_created_idx').on(t.shopId,t.createdAt)]);
 
-export const promotions=sqliteTable('promotions',{id:text('id').primaryKey(),shopId:text('shop_id').notNull().references(()=>shops.id),code:text('code').notNull(),percent:integer('percent').notNull(),active:integer('active').notNull().default(1)},t=>[uniqueIndex('promotions_shop_code_idx').on(t.shopId,t.code)]);
+export const promotions=sqliteTable('promotions',{id:text('id').primaryKey(),shopId:text('shop_id').notNull().references(()=>shops.id),code:text('code').notNull(),percent:integer('percent').notNull(),config:text('config').notNull().default('{}'),active:integer('active').notNull().default(1)},t=>[uniqueIndex('promotions_shop_code_idx').on(t.shopId,t.code)]);
 
 export const productImports=sqliteTable('product_imports',{id:text('id').primaryKey(),shopId:text('shop_id').notNull().references(()=>shops.id),requestHash:text('request_hash').notNull(),createdAt:integer('created_at').notNull()});
 
@@ -24,3 +24,6 @@ export const adminInvites=sqliteTable('admin_invites',{tokenHash:text('token_has
 
 export const shopSettings=sqliteTable('shop_settings',{shopId:text('shop_id').primaryKey().references(()=>shops.id),departmentIcons:text('department_icons').notNull().default('{}'),lowStockThreshold:integer('low_stock_threshold').notNull().default(5)});
 export const storePresence=sqliteTable('store_presence',{id:text('id').primaryKey(),shopId:text('shop_id').notNull().references(()=>shops.id),visitor:text('visitor').notNull(),lastSeen:integer('last_seen').notNull()},t=>[index('store_presence_shop_seen').on(t.shopId,t.lastSeen)]);
+
+export const promotionUses=sqliteTable('promotion_uses',{requestKey:text('request_key').primaryKey(),promotionId:text('promotion_id').notNull().references(()=>promotions.id),customerHash:text('customer_hash').notNull(),config:text('config').notNull(),createdAt:text('created_at').notNull()},t=>[index('promotion_uses_customer').on(t.promotionId,t.customerHash)]);
+export const orderPaymentEvents=sqliteTable('order_payment_events',{id:text('id').primaryKey(),orderId:text('order_id').notNull(),shopId:text('shop_id').notNull(),actor:text('actor').notNull(),status:text('status').notNull(),createdAt:text('created_at').notNull()});

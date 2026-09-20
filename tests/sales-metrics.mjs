@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import {salesMetrics,periodKey} from '../app/sales-metrics.ts';
+const rows=[{day:'2026-09-01',count:2,total:600,paid:200,pending:400,paidCount:1},{day:'2026-09-16',count:1,total:300,paid:0,pending:300,paidCount:0}];
+assert.equal(salesMetrics(rows,'2026-09-01','2026-09-30','day').average,7);
+assert.equal(salesMetrics(rows,'2026-09-01','2026-09-30','week').average,40);
+assert.equal(salesMetrics(rows,'2026-09-01','2026-09-30','fortnight').average,100);
+assert.equal(salesMetrics(rows,'2026-09-01','2026-09-30','month').average,200);
+assert.equal(salesMetrics(rows,'2026-09-01','2026-09-30','day').ticket,200);
+assert.equal(salesMetrics([],'2026-02-01','2026-02-28','day').periods.length,28);
+assert.equal(salesMetrics([],'2024-02-01','2024-02-29','day').periods.length,29);
+assert.equal(periodKey('2027-01-01','week'),'2026-12-28');
+assert.equal(periodKey('2026-09-15','fortnight'),'2026-09-01');
+assert.equal(periodKey('2026-09-16','fortnight'),'2026-09-16');
+console.log('PASS calendar averages, empty days, leap year, weekly year boundary and fortnight boundaries');

@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';import {calculateDiscount,normalizePromoPhone} from '../app/promotion-rules.ts';
+const rule={kind:'bundle',amount:0,buy:3,pay:2,productIds:[],expiresAt:null,maxUses:null};
+assert.equal(calculateDiscount([{id:'a',price:10000,quantity:3}],rule),10000);
+assert.equal(calculateDiscount([{id:'a',price:10000,quantity:6}],rule),20000);
+assert.equal(calculateDiscount([{id:'a',price:10000,quantity:4}],{...rule,buy:4}),20000);
+assert.equal(calculateDiscount([{id:'a',price:10000,quantity:2},{id:'b',price:10000,quantity:1}],rule),0);
+assert.equal(calculateDiscount([{id:'a',price:10000,quantity:2},{id:'a',price:5000,quantity:1}],rule),5000);
+assert.equal(calculateDiscount([{id:'a',price:10000,quantity:3}],{...rule,productIds:['b']}),0);
+assert.equal(calculateDiscount([{id:'a',price:10000,quantity:3}],{...rule,expiresAt:'2020-01-01T00:00:00Z'}),0);
+assert.equal(calculateDiscount([{id:'a',price:10000,quantity:3}],{...rule,kind:'fixed',amount:50000}),30000);
+assert.equal(calculateDiscount([{id:'a',price:10000,quantity:1},{id:'b',price:20000,quantity:1}],{...rule,kind:'percent',amount:10,productIds:['a']}),1000);
+assert.equal(normalizePromoPhone('+52 1 811 111 1111'),normalizePromoPhone('8111111111'));
+console.log('PASS promotion calculations: fixed, percentage, 3x2/4x2, multiples, cheapest variants, eligibility, expiry and phone normalization');
