@@ -11,7 +11,9 @@
 1. Crea tu primera cuenta desde la pantalla de activación privada entregada por separado. El enlace solo sirve hasta crear la primera cuenta. No lo compartas.
 2. Entra al administrador con tu correo y contraseña.
 3. Actualiza el nombre del negocio y el WhatsApp que recibe los pedidos.
-4. Pulsa Agregar producto. Carga una foto de tu dispositivo, nombre, precio, descripción, opciones y sucursales. Guarda.
+4. Fotos: hasta 50 MB. JPG, PNG y WebP se conservan sin redimensionar; HEIC se convierte a JPG con calidad máxima y las mismas dimensiones. Videos: MP4 o WebM hasta 90 MB, sin comprimir. Recarga el panel después de esta actualización.
+
+Pulsa Agregar producto. Carga una foto de tu dispositivo, nombre, precio, descripción, opciones y sucursales. Guarda.
 5. Carga inventario por sucursal o registra restock. Paquetería comparte inventario con Monterrey y agrega $300 al pedido.
 6. Para Excel, descarga primero la plantilla desde Importar productos. Las fotos se agregan desde Editar producto.
 7. Comparte el enlace público. El resumen queda dentro de la página; el cliente envía el enlace del pedido por WhatsApp y tú acuerdas el pago.
