@@ -224,4 +224,4 @@
 .custom-department-symbol{width:32px;height:32px;object-fit:contain;flex-shrink:0}.custom-symbol-upload{margin:16px 0;display:flex!important;align-items:center;flex-wrap:wrap;gap:12px}.custom-symbol-upload .custom-department-symbol{width:64px;height:64px}.custom-symbol-upload .hint{width:100%}.custom-symbol-label{display:grid;gap:10px;font-weight:700}.custom-symbol-label input{font-size:14px;max-width:100%}
 .payment-state{font-weight:700;display:block;margin:8px 0}.daily-orders article>div:last-child{display:flex;flex-direction:column;align-items:flex-start;gap:8px}
 .sales-table-wrap{max-height:420px}.sales-table thead{position:sticky;top:0;z-index:1}.sales-dashboard .overview-stat{min-width:0;overflow-wrap:anywhere}
-.store-scooter-logo{display:block;width:160px;max-width:40vw;height:auto;max-height:68px;object-fit:contain;border-radius:8px}
+.store-scooter-logo{display:block;width:160px;max-width:40vw;height:auto;max-height:68px;object-fit:contain;background:#fff}
