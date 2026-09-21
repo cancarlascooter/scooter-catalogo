@@ -46,3 +46,8 @@ next-env.d.ts
 /work/
 
 .dev.vars*
+
+# Private backup exports and Python runtime caches.
+/backups/
+/backup-work/
+__pycache__/
