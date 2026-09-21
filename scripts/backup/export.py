@@ -45,6 +45,12 @@ def validate_sql(path):
 
 def export_d1(account, database, destination):
     endpoint = f'https://api.cloudflare.com/client/v4/accounts/{account}/d1/database/{database}/export'
+    check = urllib.request.Request(endpoint.removesuffix('/export'), headers={
+        'Authorization': 'Bearer ' + required('CLOUDFLARE_BACKUP_TOKEN')})
+    with urllib.request.urlopen(check, timeout=30) as response:
+        if not json.load(response).get('success'):
+            raise RuntimeError('D1 read access unavailable')
+    print('D1 read access verified. Starting SQL export.')
     body = {'output_format': 'polling'}
     for attempt in range(180):
         req = urllib.request.Request(endpoint, data=json.dumps(body).encode(), headers={
