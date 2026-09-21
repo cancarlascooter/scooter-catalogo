@@ -46,3 +46,24 @@ Elegir almacenamiento, medir el tamaño de una copia, establecer límites de gas
 programar diariamente, conservar 30 días, probar descarga/descifrado/restauración y
 verificar las notificaciones de fallos. GitHub Free incluye 500 MB compartidos de
 almacenamiento de artefactos; con videos puede ser insuficiente para 30 copias completas.
+
+## Tarea diaria en GitHub
+
+El workflow `Respaldo diario cifrado` está preparado para las 07:17 UTC
+(01:17 de Monterrey). GitHub puede retrasar ejecuciones programadas.
+Solo se habilita el horario cuando la variable `BACKUP_ENABLED` vale `true`.
+Antes deben configurarse los cuatro secretos y pasar una ejecución manual.
+Los archivos cifrados se guardan como artifacts privados durante 30 días;
+no se agregan los datos de clientes al historial Git.
+
+Para descargar una copia: repositorio → Actions → Respaldo diario cifrado →
+una ejecución exitosa → Artifacts → scooter-backup. Conserva la contraseña
+fuera de GitHub, en tu administrador de contraseñas. Sin ella no se puede
+recuperar el contenido. El código del proyecto se conserva en el repositorio.
+Las credenciales del servicio no están incluidas en el respaldo de datos.
+
+El espacio disponible depende de la cuenta y de otros consumos compartidos.
+Si GitHub rechaza la subida por cuota, la ejecución falla: no existe una copia
+nueva hasta solucionar la cuota y volver a ejecutar. No se contrata espacio
+extra automáticamente. Revisa Actions y configura notificaciones de fallos
+para tu cuenta. La configuración de correo no está verificada todavía.
