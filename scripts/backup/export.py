@@ -6,6 +6,7 @@ from pathlib import Path
 import sqlite3
 import tempfile
 import time
+import urllib.error
 import urllib.request
 import urllib.parse
 
@@ -131,6 +132,15 @@ def main():
 if __name__ == '__main__':
     try:
         main()
+    except urllib.error.HTTPError as exc:
+        codes = []
+        try:
+            payload = json.loads(exc.read())
+            codes = [item.get('code') for item in payload.get('errors', []) if isinstance(item.get('code'), int)]
+        except Exception:
+            pass
+        print(f'Cloudflare export failed: HTTP {exc.code}, error codes {codes}.')
+        raise SystemExit(1)
     except Exception as exc:
         # SDK/HTTP exceptions can embed private object names or signed URLs.
         print(f'Backup failed ({type(exc).__name__}). Check credentials, service status and configuration.')
