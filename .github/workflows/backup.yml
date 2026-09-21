@@ -17,9 +17,11 @@ jobs:
       CLOUDFLARE_ACCOUNT_ID: 8cc19b5e40e03bd85efdd5cee6cd9dc7
       D1_DATABASE_ID: 9bc68e86-39c4-4998-bf6f-f63d0a3cc379
       R2_BUCKET: catalogo-pedidos-media
-      BACKUP_WORKDIR: ${{ runner.temp }}/scooter-backup-source
-      BACKUP_OUTPUT_DIR: ${{ runner.temp }}/scooter-backup-encrypted
     steps:
+      - name: Preparar carpetas temporales
+        run: |
+          echo "BACKUP_WORKDIR=$RUNNER_TEMP/scooter-backup-source" >> "$GITHUB_ENV"
+          echo "BACKUP_OUTPUT_DIR=$RUNNER_TEMP/scooter-backup-encrypted" >> "$GITHUB_ENV"
       - name: Verificar repositorio privado
         env:
           PRIVATE_REPO: ${{ github.event.repository.private }}
