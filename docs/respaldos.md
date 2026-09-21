@@ -1,6 +1,10 @@
-# Respaldo de datos — preparación
+# Respaldo diario cifrado
 
-Estado: **pendiente de elegir destino, configurar credenciales y probar un respaldo real**.
+Estado: **preparado en GitHub privado; horario desactivado hasta resolver el permiso de exportación D1 y completar la prueba**.
+
+Los cuatro secretos están configurados. La prueba confirmó que D1 Read permite
+consultar la base, pero la exportación devuelve HTTP 401 / código 10000.
+Está pendiente autorizar el permiso D1 Edit y repetir la prueba completa.
 No confundir el repositorio de código con una copia de D1/R2.
 
 ## Qué prepara este proyecto
@@ -42,9 +46,8 @@ Instalar Python, las dependencias de `scripts/backup/requirements.txt` y GnuPG.
 
 ## Pendientes antes de activar
 
-Elegir almacenamiento, medir el tamaño de una copia, establecer límites de gasto,
-programar diariamente, conservar 30 días, probar descarga/descifrado/restauración y
-verificar las notificaciones de fallos. GitHub Free incluye 500 MB compartidos de
+Resolver acceso de exportación D1, medir la copia cifrada y completar
+la prueba de descarga/descifrado/restauración antes de habilitar el horario. GitHub Free incluye 500 MB compartidos de
 almacenamiento de artefactos; con videos puede ser insuficiente para 30 copias completas.
 
 ## Tarea diaria en GitHub
@@ -66,4 +69,6 @@ El espacio disponible depende de la cuenta y de otros consumos compartidos.
 Si GitHub rechaza la subida por cuota, la ejecución falla: no existe una copia
 nueva hasta solucionar la cuota y volver a ejecutar. No se contrata espacio
 extra automáticamente. Revisa Actions y configura notificaciones de fallos
-para tu cuenta. La configuración de correo no está verificada todavía.
+para tu cuenta. Se verificó en la cuenta cancarlascooter que Actions tiene activados avisos
+en GitHub y por correo, solo para fallos; correo predeterminado cancarla19@gmail.com.
+La entrega de un correo real no ha sido comprobada.

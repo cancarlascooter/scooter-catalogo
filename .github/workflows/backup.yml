@@ -53,6 +53,16 @@ jobs:
           if-no-files-found: error
           retention-days: 30
           compression-level: 0
+      - name: Descargar copia guardada para probar recuperación
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: scooter-backup-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/scooter-backup-verify
+      - name: Verificar recuperación desde GitHub
+        env:
+          BACKUP_VERIFY_DIR: ${{ runner.temp }}/scooter-backup-verify
+          BACKUP_PASSPHRASE: ${{ secrets.BACKUP_PASSPHRASE }}
+        run: python3 scripts/backup/verify.py
       - name: Limpiar archivos temporales
         if: always()
-        run: rm -rf -- "$BACKUP_WORKDIR" "$BACKUP_OUTPUT_DIR"
+        run: rm -rf -- "$BACKUP_WORKDIR" "$BACKUP_OUTPUT_DIR" "$RUNNER_TEMP/scooter-backup-verify"
