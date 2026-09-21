@@ -1,10 +1,18 @@
 # Respaldo diario cifrado
 
-Estado: **preparado en GitHub privado; horario desactivado hasta resolver el permiso de exportación D1 y completar la prueba**.
+Estado: **activo en GitHub privado desde el 20 de septiembre de 2026 (Monterrey)**.
 
-Los cuatro secretos están configurados. La prueba confirmó que D1 Read permite
-consultar la base, pero la exportación devuelve HTTP 401 / código 10000.
-Está pendiente autorizar el permiso D1 Edit y repetir la prueba completa.
+Primera copia completa verificada:
+https://github.com/cancarlascooter/scooter-catalogo/actions/runs/35561592188
+
+Se verificaron descarga del artifact, descifrado, restauración SQL en SQLite
+ temporal y hashes de todos los archivos. No se ha realizado un cambio de
+infraestructura ni una restauración sobre producción.
+
+Cloudflare requirió D1 Write para exportar; el propietario confirmó la
+actualización del token. El script solo consulta y exporta. R2 tiene permiso
+de lectura limitado a catalogo-pedidos-media. BACKUP_ENABLED está en true.
+
 No confundir el repositorio de código con una copia de D1/R2.
 
 ## Qué prepara este proyecto
@@ -44,18 +52,26 @@ Instalar Python, las dependencias de `scripts/backup/requirements.txt` y GnuPG.
 6. Los secretos de ejecución (incluidas las claves VAPID) requieren custodia separada;
    la exportación D1/R2 no los incluye. Para un desastre total también conservar el código.
 
-## Pendientes antes de activar
+## Capacidad y recuperación
 
-Resolver acceso de exportación D1, medir la copia cifrada y completar
-la prueba de descarga/descifrado/restauración antes de habilitar el horario. GitHub Free incluye 500 MB compartidos de
-almacenamiento de artefactos; con videos puede ser insuficiente para 30 copias completas.
+La primera copia cifrada ocupa 27,189,591 bytes (unos 27.2 MB).
+Treinta copias similares requieren aproximadamente 816 MB, sin contar otros
+consumos de la cuenta. El usuario está ampliando su plan; la capacidad
+contratada final no se ha verificado. No se realizaron compras automáticas.
+
+La clave de recuperación se guardó fuera del repositorio, en la carpeta local
+Documentos/Respaldo Scooter. El propietario debe conservar una segunda copia
+segura fuera de esta computadora. Los secretos de ejecución necesitan
+custodia independiente. La prueba automática usa SQLite temporal y valida
+archivos; una recuperación completa a infraestructura D1/R2 nueva debe probarse
+antes de sustituir producción.
 
 ## Tarea diaria en GitHub
 
-El workflow `Respaldo diario cifrado` está preparado para las 07:17 UTC
+El workflow `Respaldo diario cifrado` está habilitado para las 07:17 UTC
 (01:17 de Monterrey). GitHub puede retrasar ejecuciones programadas.
 Solo se habilita el horario cuando la variable `BACKUP_ENABLED` vale `true`.
-Antes deben configurarse los cuatro secretos y pasar una ejecución manual.
+Los cuatro secretos están configurados y la ejecución manual pasó todas las verificaciones.
 Los archivos cifrados se guardan como artifacts privados durante 30 días;
 no se agregan los datos de clientes al historial Git.
 
