@@ -84,6 +84,8 @@ def list_objects(s3, bucket):
     objects = {}
     for page in s3.get_paginator('list_objects_v2').paginate(Bucket=bucket):
         for item in page.get('Contents', []):
+            if item['Key'].startswith('verification/'):
+                continue  # Temporary identity documents are intentionally not archived.
             objects[item['Key']] = {'etag': item['ETag'], 'size': item['Size']}
     return objects
 

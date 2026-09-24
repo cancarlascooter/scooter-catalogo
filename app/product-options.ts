@@ -6,12 +6,16 @@ export function optionFinalPrice(p:Pick<Product,'price'|'shippingPrice'>,v:Optio
  const base=fulfillment==='shipping'?(p.shippingPrice??p.price):p.price;
  return fulfillment==='shipping'?(v.shippingAdjustment??(v.adjustment||base)):(v.adjustment||base);
 }
-export function productPriceRange(p:Product,fulfillment:Fulfillment='mty'){
+function originalPriceRange(p:Product,fulfillment:Fulfillment='mty'){
  const groups=visibleGroups(p),base=fulfillment==='shipping'?(p.shippingPrice??p.price):p.price;
  const final=groups.find(g=>g.pricing==='final'&&g.values.some(v=>v.adjustment!==0||v.shippingAdjustment!==undefined));
  if(final){const prices=final.values.map(v=>optionFinalPrice(p,v,fulfillment));return {min:Math.min(...prices),max:Math.max(...prices)}}
  const legacy=groups.filter(g=>g.pricing!=='final');const adjustment=(v:OptionGroup['values'][number])=>fulfillment==='shipping'?(v.shippingAdjustment??v.adjustment):v.adjustment;
  return {min:base+legacy.reduce((n,g)=>n+Math.min(...g.values.map(adjustment)),0),max:base+legacy.reduce((n,g)=>n+Math.max(...g.values.map(adjustment)),0)};
+}
+export function productPriceRange(p:Product,fulfillment:Fulfillment='mty'){
+ const range=originalPriceRange(p,fulfillment),discount=p.salePrice!=null?p.price-p.salePrice:0;
+ return {min:range.min-discount,max:range.max-discount,originalMin:range.min,originalMax:range.max};
 }
 export function resolveSelection(p:Product,input:unknown={},fulfillment:Fulfillment='mty'){
  if(!input||typeof input!=='object'||Array.isArray(input))throw new Error('Elige las opciones del producto.');
@@ -19,8 +23,9 @@ export function resolveSelection(p:Product,input:unknown={},fulfillment:Fulfillm
  if(Object.keys(raw).length!==groups.length)throw new Error(`Selecciona ${groups.map(g=>g.label).join(', ')} para ${p.name}.`);
  for(const g of groups){const v=g.values.find(v=>v.id===raw[g.id]);if(!v)throw new Error(`Elige ${g.label} para ${p.name}.`);choices[g.id]=v.id;labels.push(`${g.label}: ${v.label}`);if(g.pricing==='final'){if(g.values.some(x=>x.adjustment!==0||x.shippingAdjustment!==undefined))finalPrice=optionFinalPrice(p,v,fulfillment)}else price+=fulfillment==='shipping'?(v.shippingAdjustment??v.adjustment):v.adjustment}
  if(finalPrice!==undefined)price=finalPrice;
+ const originalPrice=price;price-=p.salePrice!=null?p.price-p.salePrice:0;
  if(!Number.isSafeInteger(price)||price<1)throw new Error('El precio de esta opción no es válido.');
- return {choices,labels,price,key:JSON.stringify([p.id,...groups.map(g=>[g.id,choices[g.id]])])};
+ return {choices,labels,price,originalPrice,key:JSON.stringify([p.id,...groups.map(g=>[g.id,choices[g.id]])])};
 }
 export function validateOptions(input:unknown,basePrice:number,shippingPrice=basePrice):OptionGroup[]{
  if(!Array.isArray(input)||input.length>3)throw new Error('Puedes agregar hasta 3 grupos de opciones.');
