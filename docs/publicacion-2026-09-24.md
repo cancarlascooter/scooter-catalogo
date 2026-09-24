@@ -14,3 +14,11 @@ Autorizada por el propietario después de revisar la prueba.
 Validación antes de publicar: TypeScript, compilación, despliegue simulado, 36 comprobaciones de integración locales y migración histórica probada con inventario mixto.
 
 Recuperación: las migraciones son aditivas y el código anterior puede volver a desplegarse. Restaurar D1 completo solo con análisis previo, porque perdería pedidos posteriores al respaldo. No borrar tablas ni reemplazar las imágenes para revertir una versión de código.
+
+## Resultado
+
+Publicado correctamente en `scootermxmenu.com` y el Worker existente.
+Versión: `98d469c2-d628-442f-b40a-910127325c49`. Código publicado: `2839766`.
+Limpieza de documentos programada cada hora, minuto 17 UTC.
+
+Comparación posterior: 4 productos con todos sus campos anteriores conservados y las 4 imágenes con el mismo SHA-256. Se conservaron 35 pedidos, 1 administrador y 862 unidades de inventario. Logo original confirmado. Las rutas privadas de pedidos, verificación y resumen rechazan acceso sin sesión (401).
