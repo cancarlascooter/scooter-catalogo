@@ -1,12 +1,28 @@
 {
-  "name": "catalogo-pedidos",
-  "account_id": "8cc19b5e40e03bd85efdd5cee6cd9dc7",
+  "name": "ropa-accesorios-pruebas",
   "main": "vinext/server/fetch-handler",
   "compatibility_date": "2026-05-15",
-  "compatibility_flags": ["nodejs_compat"],
-  "workers_dev": true,
-  "routes": [{"pattern":"scootermxmenu.com","custom_domain":true}],
-  "d1_databases": [{"binding":"DB","database_name":"catalogo-pedidos-db","database_id":"9bc68e86-39c4-4998-bf6f-f63d0a3cc379","migrations_dir":"drizzle"}],
-  "r2_buckets": [{"binding":"BUCKET","bucket_name":"catalogo-pedidos-media"}],
-  "vars": {"AUTH_MODE":"password","VAPID_SUBJECT":"mailto:cancarla19@gmail.com"}
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "workers_dev": false,
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "ropa-accesorios-pruebas",
+      "database_id": "00000000-0000-4000-8000-000000000002",
+      "migrations_dir": "drizzle",
+      "remote": false
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "BUCKET",
+      "bucket_name": "ropa-accesorios-pruebas",
+      "remote": false
+    }
+  ],
+  "vars": {
+    "AUTH_MODE": "password"
+  }
 }

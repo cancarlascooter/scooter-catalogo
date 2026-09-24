@@ -35,7 +35,7 @@ export async function POST(req:Request,{params}:{params:Promise<{action:string}>
      await authDb().batch([
        authDb().prepare('INSERT INTO admin_installation(slot,owner_id) VALUES(1,?)').bind(id),
        authDb().prepare('INSERT INTO admin_users(id,email,password_hash,owner_id,is_owner,created_at) VALUES(?,?,?,?,1,?)').bind(id,email,hash,id,Date.now()),
-       authDb().prepare('INSERT INTO shops(id,owner,name,phone) VALUES(?,?,?,?)').bind(crypto.randomUUID(),id,'Mi tienda','528125818920')
+       authDb().prepare('INSERT INTO shops(id,owner,name,phone) VALUES(?,?,?,?)').bind(crypto.randomUUID(),id,'Ropa y accesorios · Prueba','')
      ]);
    }else{
      const invitation=await authDb().prepare('SELECT owner_id FROM admin_invites WHERE token_hash=? AND email=? AND expires_at>?').bind(digest(secret),email,Date.now()).first<{owner_id:string}>();

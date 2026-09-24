@@ -3,5 +3,5 @@ import {defineConfig} from 'vite';
 import {cloudflare} from '@cloudflare/vite-plugin';
 export default defineConfig({
   plugins: [vinext(), cloudflare({configPath:'wrangler.preview.json',viteEnvironment:{name:'rsc',childEnvironments:['ssr']},inspectorPort:false})],
-  server: {host:'127.0.0.1',port:8795,strictPort:true},
+  server: {host:'127.0.0.1',port:8796,strictPort:true},
 });

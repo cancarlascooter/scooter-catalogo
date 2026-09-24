@@ -2,7 +2,7 @@ import {env} from 'cloudflare:workers';
 import {cookies} from 'next/headers';
 import {scrypt,randomBytes,timingSafeEqual,createHash} from 'node:crypto';
 
-export const SESSION_COOKIE='__Host-catalogo_session';
+export const SESSION_COOKIE='__Host-ropa_session';
 export const settings=()=>env as unknown as Record<string,string>;
 export const passwordMode=()=>settings().AUTH_MODE==='password';
 export const authDb=()=>{if(!env.DB)throw new Error('Database unavailable');return env.DB};

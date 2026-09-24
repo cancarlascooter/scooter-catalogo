@@ -1,4 +1,5 @@
 export const adminSections=[
+ {id:'verificaciones',label:'Verificaciones',description:'Revisar documentos privados y aprobar o rechazar clientes.'},
  {id:'mis-ventas',label:'Mis ventas',description:'Solo las ventas que este perfil marque como pagadas; filtros por día, semana, quincena o mes.'},
  {id:'pedidos',label:'Pedidos y pagos',description:'Datos de clientes, reportes y marcar pedidos como pagados.'},
  {id:'negocio',label:'Negocio y WhatsApp',description:'Cambiar nombre y número para recibir pedidos.'},
