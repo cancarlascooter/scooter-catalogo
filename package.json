@@ -15,7 +15,9 @@
     "dev:cloudflare": "vite --config vite.cloudflare.config.ts --port 5173",
     "build:cloudflare": "vite build --config vite.cloudflare.config.ts",
     "deploy:cloudflare": "npm run build:cloudflare && wrangler deploy --config dist/server/wrangler.json",
-    "db:migrate:cloudflare": "wrangler d1 migrations apply DB --remote --config wrangler.json"
+    "db:migrate:cloudflare": "wrangler d1 migrations apply DB --remote --config wrangler.json",
+    "dev:preview": "vite --config vite.preview.config.ts",
+    "db:migrate:preview": "wrangler d1 migrations apply DB --local --config wrangler.preview.json"
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",

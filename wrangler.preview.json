@@ -1,0 +1,10 @@
+{
+  "name": "scooter-pruebas-local",
+  "main": "vinext/server/fetch-handler",
+  "compatibility_date": "2026-05-15",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": false,
+  "d1_databases": [{"binding":"DB","database_name":"scooter-pruebas-local","database_id":"00000000-0000-4000-8000-000000000001","migrations_dir":"drizzle","remote":false}],
+  "r2_buckets": [{"binding":"BUCKET","bucket_name":"scooter-pruebas-local","remote":false}],
+  "vars": {"AUTH_MODE":"password"}
+}
